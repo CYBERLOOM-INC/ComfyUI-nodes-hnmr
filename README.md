@@ -1,3 +1,12 @@
+# Disclaimer
+
+This is only a fix implemented on top of the original [ComfyUI-nodes-hnmr](https://github.com/hnmr293/ComfyUI-nodes-hnmr) by hnmr293.
+The reason why this repo exists is because, hnmr293 has not been approving any pull requests for a while now, and I believe our community deserves to be able to use this amazing tool by hnmr293 without any issues.
+All credits go to:
++ [hnmr93](https://github.com/hnmr293)
++ [spacepxl](https://github.com/spacepxl)
++ [WeeBull](https://github.com/WeeBull)
+
 # ComfyUI custom nodes
 
 ![cover](./examples/workflow_xyz.png)
