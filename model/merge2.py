@@ -5,7 +5,7 @@ from .loader import Dict2Model
 from .merge import block_index, weighted_sum_block, StateDictMergerBlockWeighted
 from .iter import iterize_model
 
-from comfy.ldm.models.diffusion.ddpm import LatentDiffusion
+# from comfy.ldm.models.diffusion.ddpm import LatentDiffusion
 
 class MergedModule(torch.nn.Module):
     
@@ -41,15 +41,15 @@ class MergedModule(torch.nn.Module):
 ATTR_ALPHAS = 'mbw_alphas'
 ATTR_INDEX = 'mbw_index'
 
-def get_current_alpha(model: LatentDiffusion) -> Optional[List[float]]:
+def get_current_alpha(model) -> Optional[List[float]]:
     if hasattr(model, ATTR_ALPHAS):
         return getattr(model, ATTR_ALPHAS)[getattr(model, ATTR_INDEX)]
     else:
         return None
 
 def mbw_on_the_fly(
-    model_A: LatentDiffusion,
-    model_B: LatentDiffusion,
+    model_A,
+    model_B,
     alphas_list: List[List[float]],
     base_alpha: float,
 ):
