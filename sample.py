@@ -171,22 +171,23 @@ def common_ksampler_xyz(
         if alphas is not None:
             print(f'alpha = {alphas}')
 
-        for seed_ in seed:
-            noise, latent_image = get_noise([seed_], latent_image, disable_noise, latent.get('batch_index', 0))
-            noise, latent_image, cfg_ = get_cfg(noise, latent_image, cfg)
+        for cfg_ in cfg:
+            for seed_ in seed:
+                noise, latent_image = get_noise([seed_], latent_image, disable_noise, latent.get('batch_index', 0))
+                noise, latent_image, cfg__ = get_cfg(noise, latent_image, [cfg_])
+                
+                cfg__ = cfg__.to('cuda')
             
-            cfg_ = cfg_.to('cuda')
-        
-            samples = comfy.sample.sample(
-                current_model, noise, step, cfg_, sampler, scheduler,
-                positive_copy, negative_copy, latent_image[0],
-                denoise=denoise, disable_noise=disable_noise,
-                start_step=start_step, last_step=last_step,
-                force_full_denoise=force_full_denoise, noise_mask=noise_mask
-            )
-            
-            samples = samples.cpu()
-            all_samples.append(samples)
+                samples = comfy.sample.sample(
+                    current_model, noise, step, cfg__, sampler, scheduler,
+                    positive_copy, negative_copy, latent_image[0],
+                    denoise=denoise, disable_noise=disable_noise,
+                    start_step=start_step, last_step=last_step,
+                    force_full_denoise=force_full_denoise, noise_mask=noise_mask
+                )
+                
+                samples = samples.cpu()
+                all_samples.append(samples)
 
     out = latent.copy()
     out["samples"] = torch.cat(all_samples)
